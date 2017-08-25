@@ -1,7 +1,7 @@
 {
   "name": "yireo/magento2-catalog-utils",
   "type": "magento2-module",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "OSL-3.0",
   "description": "Generic module containing Magento 2 catalog utilites for other modules",
   "keywords":[ "composer-installer", "magento"],
@@ -12,8 +12,8 @@
     }
   ],
   "require": {
-    "magento/framework": "100.*",
-    "php": ">=5.6.0"
+    "magento/framework": "*",
+    "php": ">=7.0.0"
   },
   "require-dev":{
     "phpunit/phpunit":"*",
