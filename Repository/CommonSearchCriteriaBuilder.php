@@ -4,13 +4,16 @@
  *
  * @package     Yireo_CatalogUtils
  * @author      Yireo (https://www.yireo.com/)
- * @copyright   Copyright 2017 Yireo (https://www.yireo.com/)
+ * @copyright   Copyright 2018 Yireo (https://www.yireo.com/)
  * @license     OSL
  */
+
+declare(strict_types=1);
 
 namespace Yireo\CatalogUtils\Repository;
 
 use Magento\Framework\Api\Search\SearchCriteriaBuilder;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\Api\Filter;
 use Magento\Eav\Model\Entity\Collection\AbstractCollection;
@@ -34,8 +37,7 @@ class CommonSearchCriteriaBuilder
     public function __construct(
         SearchCriteriaBuilder $searchCriteriaBuilder,
         StoreManagerInterface $storeManager
-    )
-    {
+    ) {
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
         $this->storeManager = $storeManager;
     }
@@ -49,10 +51,11 @@ class CommonSearchCriteriaBuilder
     }
 
     /**
-     * Add website_id folder
+     * Add website filter
      *
      * @param int $websiteId
      * @return bool
+     * @throws LocalizedException
      */
     public function addWebsiteIdFilter($websiteId = 0)
     {
@@ -69,7 +72,8 @@ class CommonSearchCriteriaBuilder
                 Filter::KEY_FIELD => 'website_id',
                 Filter::KEY_CONDITION_TYPE => 'eq',
                 Filter::KEY_VALUE => $websiteId
-            ]));
+            ])
+        );
 
         return true;
     }

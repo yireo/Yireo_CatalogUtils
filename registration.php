@@ -4,7 +4,7 @@
  *
  * @package     Yireo_CatalogUtils
  * @author      Yireo (https://www.yireo.com/)
- * @copyright   Copyright 2017 Yireo (https://www.yireo.com/)
+ * @copyright   Copyright 2018 Yireo (https://www.yireo.com/)
  * @license     OSL
  */
 
