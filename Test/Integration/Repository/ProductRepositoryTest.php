@@ -7,6 +7,7 @@ namespace Yireo\CatalogUtils\Test\Integration\Repository;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\InputException;
+use Magento\Framework\Exception\NotFoundException;
 use Magento\Framework\Exception\StateException;
 use PHPUnit\Framework\TestCase;
 use Yireo\CatalogUtils\Repository\ProductRepository;
@@ -18,6 +19,7 @@ class ProductRepositoryTest extends TestCase
      * @throws CouldNotSaveException
      * @throws InputException
      * @throws StateException
+     * @throws NotFoundException
      */
     public function testFetchingSingleProductAndSavingIt()
     {
