@@ -12,7 +12,10 @@ declare(strict_types=1);
 
 namespace Yireo\CatalogUtils\Repository;
 
+use Magento\Framework\Api\ObjectFactory;
+use Magento\Framework\Api\Search\FilterGroupBuilder;
 use Magento\Framework\Api\Search\SearchCriteriaBuilder;
+use Magento\Framework\Api\SortOrderBuilder;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\Api\Filter;
@@ -22,7 +25,7 @@ use Magento\Eav\Model\Entity\Collection\AbstractCollection;
  * Class CommonSearchCriteriaBuilder
  * @package Yireo\CatalogUtils\Repository
  */
-class CommonSearchCriteriaBuilder
+class CommonSearchCriteriaBuilder extends SearchCriteriaBuilder
 {
     /**
      * @var StoreManagerInterface
@@ -31,14 +34,18 @@ class CommonSearchCriteriaBuilder
 
     /**
      * CommonSearchCriteriaBuilder constructor.
-     * @param SearchCriteriaBuilder $searchCriteriaBuilder
+     * @param ObjectFactory $objectFactory
+     * @param FilterGroupBuilder $filterGroupBuilder
+     * @param SortOrderBuilder $sortOrderBuilder
      * @param StoreManagerInterface $storeManager
      */
     public function __construct(
-        SearchCriteriaBuilder $searchCriteriaBuilder,
+        ObjectFactory $objectFactory,
+        FilterGroupBuilder $filterGroupBuilder,
+        SortOrderBuilder $sortOrderBuilder,
         StoreManagerInterface $storeManager
     ) {
-        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        parent::__construct($objectFactory, $filterGroupBuilder, $sortOrderBuilder);
         $this->storeManager = $storeManager;
     }
 
@@ -47,7 +54,7 @@ class CommonSearchCriteriaBuilder
      */
     public function addSortByPrimaryKey()
     {
-        return $this->searchCriteriaBuilder->addSortOrder('entity_id', AbstractCollection::SORT_ORDER_DESC);
+        return $this->addSortOrder('entity_id', AbstractCollection::SORT_ORDER_DESC);
     }
 
     /**
@@ -67,7 +74,7 @@ class CommonSearchCriteriaBuilder
             return false;
         }
 
-        $this->searchCriteriaBuilder->addFilter(
+        $this->addFilter(
             new Filter([
                 Filter::KEY_FIELD => 'website_id',
                 Filter::KEY_CONDITION_TYPE => 'eq',
@@ -76,15 +83,5 @@ class CommonSearchCriteriaBuilder
         );
 
         return true;
-    }
-
-    /**
-     * @param $name
-     * @param $arguments
-     * @return mixed
-     */
-    public function __call($name, $arguments)
-    {
-        return $this->searchCriteriaBuilder->$name($arguments);
     }
 }

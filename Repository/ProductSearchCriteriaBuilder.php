@@ -31,7 +31,7 @@ class ProductSearchCriteriaBuilder extends CommonSearchCriteriaBuilder
      */
     public function addStatusFilter(int $status)
     {
-        $this->searchCriteriaBuilder->addFilter(
+        $this->addFilter(
             new Filter([
                 Filter::KEY_FIELD => ProductInterface::STATUS,
                 Filter::KEY_CONDITION_TYPE => 'eq',
