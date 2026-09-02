@@ -1,0 +1,9 @@
+{
+    "module_name": "Yireo_CatalogUtils",
+    "composer_name": "yireo/magento2-catalog-utils",
+    "sequence": [
+        "Magento_Catalog",
+        "Magento_Eav",
+        "Magento_Store"
+    ]
+}
