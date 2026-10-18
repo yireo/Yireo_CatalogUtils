@@ -15,7 +15,7 @@ use Yireo\CatalogUtils\Repository\ProductRepository;
 class ProductRepositoryTest extends TestCase
 {
     /**
-     * @magentoDataFixture Magento/Catalog/_files/attribute_set_with_product.php
+     * @magentoDataFixture Magento/Catalog/_files/product_simple.php
      * @throws CouldNotSaveException
      * @throws InputException
      * @throws StateException
