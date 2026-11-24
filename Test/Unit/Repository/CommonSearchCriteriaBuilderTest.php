@@ -73,6 +73,40 @@ class CommonSearchCriteriaBuilderTest extends TestCase
         $this->assertCount(0, $this->addedFilters);
     }
 
+    public function testAddWebsiteIdFilterRejectsNegativeWebsiteId(): void
+    {
+        $builder = $this->createBuilder($this->createStoreManager(1));
+        $this->assertFalse($builder->addWebsiteIdFilter(-1));
+
+        $builder->create();
+        $this->assertCount(0, $this->addedFilters);
+    }
+
+    public function testAddWebsiteIdFilterRejectsNonIntegerWebsiteId(): void
+    {
+        $builder = $this->createBuilder($this->createStoreManager(1));
+
+        $this->expectException(\TypeError::class);
+        $builder->addWebsiteIdFilter('1,2');
+    }
+
+    public function testAddWebsiteIdFilterCastsCurrentWebsiteIdToInteger(): void
+    {
+        $website = $this->getMockBuilder(WebsiteInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $website->method('getId')->willReturn('2');
+        $storeManager = $this->createStoreManager(null);
+        $storeManager->method('getWebsite')->willReturn($website);
+
+        $builder = $this->createBuilder($storeManager);
+        $this->assertTrue($builder->addWebsiteIdFilter());
+
+        $builder->create();
+        $this->assertCount(1, $this->addedFilters);
+        $this->assertSame(2, $this->addedFilters[0]->getValue());
+    }
+
     private function assertFilter(Filter $filter, string $field, string $conditionType, mixed $value): void
     {
         $this->assertSame($field, $filter->getField());
