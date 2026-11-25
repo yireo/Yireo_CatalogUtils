@@ -64,13 +64,13 @@ class CommonSearchCriteriaBuilder extends SearchCriteriaBuilder
      * @return bool
      * @throws LocalizedException
      */
-    public function addWebsiteIdFilter($websiteId = 0)
+    public function addWebsiteIdFilter(int $websiteId = 0): bool
     {
-        if (!$websiteId) {
-            $websiteId = $this->storeManager->getWebsite()->getId();
+        if ($websiteId === 0) {
+            $websiteId = (int)$this->storeManager->getWebsite()->getId();
         }
 
-        if (!$websiteId > 0) {
+        if ($websiteId <= 0) {
             return false;
         }
 
